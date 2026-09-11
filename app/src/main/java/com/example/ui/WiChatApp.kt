@@ -27,6 +27,7 @@ import com.example.ui.screens.MyQrCodeScreen
 import com.example.ui.screens.ScanQrScreen
 import com.example.ui.screens.SettingsAboutScreen
 import com.example.ui.screens.WelcomeScreen
+import com.example.ui.theme.WiChatTheme
 
 object WiChatRoutes {
     const val WELCOME = "welcome"
@@ -50,16 +51,18 @@ fun WiChatApp(
     val currentChatPeer by viewModel.currentChatPeer.collectAsState()
     val currentMessages by viewModel.currentMessages.collectAsState()
     val directIpState by viewModel.directIpState.collectAsState()
+    val themeMode by viewModel.themeMode.collectAsState()
 
     var showDirectIpDialog by remember { mutableStateOf(false) }
 
     val startDestination = if (userProfile.isRegistered) WiChatRoutes.HOME else WiChatRoutes.WELCOME
 
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        NavHost(
+    WiChatTheme(themeMode = themeMode) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            NavHost(
             navController = navController,
             startDestination = startDestination,
             enterTransition = { fadeIn(animationSpec = tween(220)) },
@@ -154,6 +157,10 @@ fun WiChatApp(
                 SettingsAboutScreen(
                     userProfile = userProfile,
                     networkInfo = networkInfo,
+                    currentThemeMode = themeMode,
+                    onSelectThemeMode = { newMode ->
+                        viewModel.setThemeMode(newMode)
+                    },
                     onSaveProfile = { newName ->
                         viewModel.saveProfile(newName)
                     },
@@ -205,4 +212,5 @@ fun WiChatApp(
             )
         }
     }
+}
 }

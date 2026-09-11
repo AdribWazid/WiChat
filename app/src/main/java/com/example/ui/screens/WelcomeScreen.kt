@@ -74,18 +74,23 @@ fun WelcomeScreen(
             verticalArrangement = Arrangement.Center
         ) {
             // App Logo
-            Box(
-                modifier = Modifier
-                    .size(110.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primaryContainer),
-                contentAlignment = Alignment.Center
+            Surface(
+                shape = RoundedCornerShape(28.dp),
+                color = androidx.compose.ui.graphics.Color.White,
+                shadowElevation = 3.dp,
+                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
+                modifier = Modifier.size(110.dp)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_wichat_logo),
-                    contentDescription = "WiChat Logo",
-                    modifier = Modifier.size(72.dp)
-                )
+                Box(contentAlignment = Alignment.Center) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_wichat_logo),
+                        contentDescription = "WiChat Logo",
+                        modifier = Modifier
+                            .size(92.dp)
+                            .clip(RoundedCornerShape(20.dp)),
+                        contentScale = androidx.compose.ui.layout.ContentScale.Fit
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(24.dp))

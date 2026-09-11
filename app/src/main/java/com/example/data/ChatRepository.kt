@@ -1,6 +1,7 @@
 package com.example.data
 
 import android.content.Context
+import com.example.model.AppThemeMode
 import com.example.model.LocalNetworkInfo
 import com.example.model.MessageEntity
 import com.example.model.PeerEntity
@@ -27,6 +28,9 @@ class ChatRepository(
 
     private val _userProfile = MutableStateFlow(userPrefs.getUserProfile())
     val userProfile: StateFlow<UserProfile> = _userProfile.asStateFlow()
+
+    private val _themeMode = MutableStateFlow(userPrefs.getThemeMode())
+    val themeMode: StateFlow<AppThemeMode> = _themeMode.asStateFlow()
 
     private val _networkInfo = MutableStateFlow(LocalNetworkInfo())
     val networkInfo: StateFlow<LocalNetworkInfo> = _networkInfo.asStateFlow()
@@ -86,6 +90,11 @@ class ChatRepository(
     fun removeAvatar() {
         userPrefs.removeAvatar()
         _userProfile.value = userPrefs.getUserProfile()
+    }
+
+    fun saveThemeMode(mode: AppThemeMode) {
+        userPrefs.saveThemeMode(mode)
+        _themeMode.value = mode
     }
 
     suspend fun sendMessage(peerId: String, content: String): Boolean {

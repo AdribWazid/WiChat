@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.ChatRepository
+import com.example.model.AppThemeMode
 import com.example.model.ConnectionState
 import com.example.model.LocalNetworkInfo
 import com.example.model.MessageEntity
@@ -33,6 +34,7 @@ class WiChatViewModel(application: Application) : AndroidViewModel(application) 
 
     val userProfile: StateFlow<UserProfile> = repository.userProfile
     val networkInfo: StateFlow<LocalNetworkInfo> = repository.networkInfo
+    val themeMode: StateFlow<AppThemeMode> = repository.themeMode
 
     val allPeers: StateFlow<List<PeerEntity>> = repository.allPeers
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
@@ -78,6 +80,10 @@ class WiChatViewModel(application: Application) : AndroidViewModel(application) 
 
     fun removeAvatar() {
         repository.removeAvatar()
+    }
+
+    fun setThemeMode(mode: AppThemeMode) {
+        repository.saveThemeMode(mode)
     }
 
     fun refreshNetwork() {

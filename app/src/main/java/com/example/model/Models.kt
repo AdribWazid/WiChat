@@ -63,3 +63,26 @@ enum class ConnectionState {
     CONNECTED,
     FAILED
 }
+
+enum class AppThemeMode(val key: String, val title: String, val description: String) {
+    AUTO(
+        key = "auto",
+        title = "Auto (Day – Light, Night – Dark)",
+        description = "Automatically use Light mode during the day and Dark mode at night/system dark mode"
+    ),
+    LIGHT(
+        key = "light",
+        title = "Light",
+        description = "Always use the Light theme"
+    ),
+    DARK(
+        key = "dark",
+        title = "Dark",
+        description = "Always use the Dark theme"
+    );
+
+    companion object {
+        fun fromKey(key: String?): AppThemeMode =
+            entries.firstOrNull { it.key.equals(key, ignoreCase = true) } ?: AUTO
+    }
+}

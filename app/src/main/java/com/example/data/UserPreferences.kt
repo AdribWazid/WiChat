@@ -3,6 +3,7 @@ package com.example.data
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
+import com.example.model.AppThemeMode
 import com.example.model.UserProfile
 import java.io.File
 import java.io.FileOutputStream
@@ -18,7 +19,17 @@ class UserPreferences(private val context: Context) {
         private const val KEY_PORT = "preferred_port"
         private const val KEY_REGISTERED = "is_registered"
         private const val KEY_COLOR_INDEX = "color_index"
+        private const val KEY_THEME_MODE = "app_theme_mode"
         private const val AVATAR_FILE_NAME = "user_avatar.jpg"
+    }
+
+    fun getThemeMode(): AppThemeMode {
+        val key = prefs.getString(KEY_THEME_MODE, AppThemeMode.AUTO.key)
+        return AppThemeMode.fromKey(key)
+    }
+
+    fun saveThemeMode(mode: AppThemeMode) {
+        prefs.edit().putString(KEY_THEME_MODE, mode.key).apply()
     }
 
     fun getUserProfile(): UserProfile {

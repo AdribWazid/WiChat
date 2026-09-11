@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ApplicationProvider
+import com.example.model.AppThemeMode
 import com.example.model.LocalNetworkInfo
 import com.example.model.UserProfile
 import com.example.model.WiChatProtocol
@@ -103,6 +105,67 @@ class ExampleRobolectricTest {
         composeTestRule.onNodeWithTag("feature_zero_cloud_experience").assertExists()
         composeTestRule.onNodeWithTag("feature_direct_ip_connect").assertExists()
         composeTestRule.onNodeWithTag("feature_qr_connect").assertExists()
+
+        // Verify Theme section at the top of Settings exists
+        composeTestRule.onNodeWithTag("settings_theme_card").assertExists()
+        composeTestRule.onNodeWithTag("theme_option_auto").assertExists()
+        composeTestRule.onNodeWithTag("theme_option_light").assertExists()
+        composeTestRule.onNodeWithTag("theme_option_dark").assertExists()
+        composeTestRule.onNodeWithTag("radio_auto").assertExists()
+        composeTestRule.onNodeWithTag("radio_light").assertExists()
+        composeTestRule.onNodeWithTag("radio_dark").assertExists()
+    }
+
+    @Test
+    fun `test SettingsAboutScreen theme selection callback`() {
+        val userProfile = UserProfile(userId = "wc_testuser", displayName = "Tester", isRegistered = true)
+        val networkInfo = LocalNetworkInfo(isConnectedToWifi = true)
+        var selectedTheme: AppThemeMode? = null
+
+        composeTestRule.setContent {
+            WiChatTheme {
+                SettingsAboutScreen(
+                    userProfile = userProfile,
+                    networkInfo = networkInfo,
+                    currentThemeMode = AppThemeMode.AUTO,
+                    onSelectThemeMode = { selectedTheme = it },
+                    onOpenDirectIp = {},
+                    onOpenQrConnect = {},
+                    onOpenMyQr = {},
+                    onOpenScanQr = {},
+                    onBack = {}
+                )
+            }
+        }
+
+        // Tap Dark theme option
+        composeTestRule.onNodeWithTag("theme_option_dark").performClick()
+        assertEquals(AppThemeMode.DARK, selectedTheme)
+
+        // Tap Light theme option
+        composeTestRule.onNodeWithTag("theme_option_light").performClick()
+        assertEquals(AppThemeMode.LIGHT, selectedTheme)
+    }
+
+    @Test
+    fun userPreferences_savesAndPersistsThemeMode() {
+        val context = ApplicationProvider.getApplicationContext<android.content.Context>()
+        val userPreferences = com.example.data.UserPreferences(context)
+
+        // Default should be AUTO
+        assertEquals(AppThemeMode.AUTO, userPreferences.getThemeMode())
+
+        // Save DARK
+        userPreferences.saveThemeMode(AppThemeMode.DARK)
+
+        // Reload with fresh instance to simulate restart
+        val reloaded = com.example.data.UserPreferences(context)
+        assertEquals(AppThemeMode.DARK, reloaded.getThemeMode())
+
+        // Save LIGHT
+        reloaded.saveThemeMode(AppThemeMode.LIGHT)
+        val reloaded2 = com.example.data.UserPreferences(context)
+        assertEquals(AppThemeMode.LIGHT, reloaded2.getThemeMode())
     }
 
     @Test

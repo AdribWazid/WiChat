@@ -299,7 +299,7 @@ fun MessageBubble(
                 Text(
                     text = message.content,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = if (isOutgoing) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
+                    color = if (isOutgoing) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))

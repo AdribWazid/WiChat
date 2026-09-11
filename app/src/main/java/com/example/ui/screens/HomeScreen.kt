@@ -3,6 +3,7 @@ package com.example.ui.screens
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -50,6 +51,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -66,6 +68,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.model.LocalNetworkInfo
+import com.example.model.MessageDirection
+import com.example.model.MessageEntity
 import com.example.model.PeerEntity
 import com.example.model.UserProfile
 import com.example.ui.components.UserAvatar
@@ -76,6 +80,15 @@ import com.example.ui.theme.StatusOnline
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+
+data class ChatListItemUiModel(
+    val peer: PeerEntity,
+    val latestMessage: MessageEntity?,
+    val matchedMessage: MessageEntity? = null,
+    val matchingMessageCount: Int = 0,
+    val matchedByContactName: Boolean = false,
+    val matchedByKeyword: Boolean = false
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

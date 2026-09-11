@@ -48,6 +48,7 @@ fun WiChatApp(
     val userProfile by viewModel.userProfile.collectAsState()
     val networkInfo by viewModel.networkInfo.collectAsState()
     val allPeers by viewModel.allPeers.collectAsState()
+    val allMessages by viewModel.allMessages.collectAsState()
     val currentChatPeer by viewModel.currentChatPeer.collectAsState()
     val currentMessages by viewModel.currentMessages.collectAsState()
     val directIpState by viewModel.directIpState.collectAsState()
@@ -85,6 +86,7 @@ fun WiChatApp(
                     userProfile = userProfile,
                     networkInfo = networkInfo,
                     allPeers = allPeers,
+                    allMessages = allMessages,
                     onSelectPeer = { peerId ->
                         viewModel.selectPeer(peerId)
                         navController.navigate(WiChatRoutes.CHAT)

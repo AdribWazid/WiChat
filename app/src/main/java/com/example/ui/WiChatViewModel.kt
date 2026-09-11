@@ -42,6 +42,9 @@ class WiChatViewModel(application: Application) : AndroidViewModel(application) 
     val onlinePeers: StateFlow<List<PeerEntity>> = repository.onlinePeers
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    val allMessages: StateFlow<List<MessageEntity>> = repository.allMessages
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
     private val _selectedPeerId = MutableStateFlow<String?>(null)
     val selectedPeerId: StateFlow<String?> = _selectedPeerId.asStateFlow()
 

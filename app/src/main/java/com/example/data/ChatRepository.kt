@@ -37,6 +37,7 @@ class ChatRepository(
 
     val allPeers: Flow<List<PeerEntity>> = peerDao.getAllPeers()
     val onlinePeers: Flow<List<PeerEntity>> = peerDao.getOnlinePeers()
+    val allMessages: Flow<List<MessageEntity>> = messageDao.getAllMessages()
 
     init {
         refreshNetworkInfo()

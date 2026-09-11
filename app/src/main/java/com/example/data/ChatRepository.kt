@@ -72,6 +72,22 @@ class ChatRepository(
         refreshNetworkInfo()
     }
 
+    fun saveProfileWithAvatar(displayName: String, avatarUri: String?) {
+        userPrefs.saveProfileWithAvatar(displayName, avatarUri, true)
+        _userProfile.value = userPrefs.getUserProfile()
+        connectionManager.start()
+        refreshNetworkInfo()
+    }
+
+    fun copyAvatarFromUri(sourceUri: android.net.Uri): String? {
+        return userPrefs.copyUriToLocalAvatar(sourceUri)
+    }
+
+    fun removeAvatar() {
+        userPrefs.removeAvatar()
+        _userProfile.value = userPrefs.getUserProfile()
+    }
+
     suspend fun sendMessage(peerId: String, content: String): Boolean {
         val peer = peerDao.getPeerById(peerId) ?: return false
         connectionManager.sendMessage(peer, content)

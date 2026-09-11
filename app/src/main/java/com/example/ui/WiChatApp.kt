@@ -157,6 +157,15 @@ fun WiChatApp(
                     onSaveProfile = { newName ->
                         viewModel.saveProfile(newName)
                     },
+                    onSaveProfileWithAvatar = { newName, newAvatarUri ->
+                        viewModel.saveProfileWithAvatar(newName, newAvatarUri)
+                    },
+                    onCopyAvatarUri = { uri ->
+                        viewModel.copyAvatarFromUri(uri)
+                    },
+                    onRemoveAvatar = {
+                        viewModel.removeAvatar()
+                    },
                     onOpenDirectIp = {
                         viewModel.resetDirectIpState()
                         showDirectIpDialog = true

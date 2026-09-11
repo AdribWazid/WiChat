@@ -42,6 +42,7 @@ data class PeerEntity(
 data class UserProfile(
     val userId: String,
     val displayName: String,
+    val avatarUri: String? = null,
     val preferredPort: Int = 8888,
     val avatarColorIndex: Int = 0,
     val isRegistered: Boolean = false

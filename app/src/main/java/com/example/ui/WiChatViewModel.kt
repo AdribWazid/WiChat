@@ -68,6 +68,18 @@ class WiChatViewModel(application: Application) : AndroidViewModel(application) 
         repository.saveProfile(displayName)
     }
 
+    fun saveProfileWithAvatar(displayName: String, avatarUri: String?) {
+        repository.saveProfileWithAvatar(displayName, avatarUri)
+    }
+
+    fun copyAvatarFromUri(sourceUri: android.net.Uri): String? {
+        return repository.copyAvatarFromUri(sourceUri)
+    }
+
+    fun removeAvatar() {
+        repository.removeAvatar()
+    }
+
     fun refreshNetwork() {
         repository.refreshNetworkInfo()
     }

@@ -68,6 +68,7 @@ import androidx.compose.ui.unit.sp
 import com.example.model.LocalNetworkInfo
 import com.example.model.PeerEntity
 import com.example.model.UserProfile
+import com.example.ui.components.UserAvatar
 import com.example.ui.components.ConnectionBottomSheet
 import com.example.ui.components.WifiQrFabIcon
 import com.example.ui.theme.StatusOffline
@@ -171,21 +172,20 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Box(
-                            modifier = Modifier
-                                .size(46.dp)
-                                .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.primaryContainer),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = userProfile.displayName.take(1).uppercase(),
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 20.sp,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        }
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(12.dp))
+                            .clickable { onOpenSettings() }
+                            .padding(4.dp)
+                            .testTag("home_user_profile_header")
+                    ) {
+                        UserAvatar(
+                            displayName = userProfile.displayName,
+                            avatarUri = userProfile.avatarUri,
+                            size = 46.dp,
+                            modifier = Modifier.testTag("home_user_avatar")
+                        )
                         Spacer(modifier = Modifier.width(12.dp))
                         Column {
                             Row(verticalAlignment = Alignment.CenterVertically) {

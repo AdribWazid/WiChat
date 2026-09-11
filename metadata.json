@@ -1,0 +1,8 @@
+{
+  "name": "Remix WiChat",
+  "description": "Local Wi-Fi peer-to-peer messaging application for Android. Chat offline without internet or cloud servers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
